@@ -166,7 +166,7 @@ br { clear:both; }
     letter-spacing: -1px;
 }
 
-
+img[alt=samplepic] { width: 60%; }
 
 #header-github  {
     color: #fff;
