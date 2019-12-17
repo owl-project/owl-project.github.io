@@ -29,35 +29,84 @@
       <div id="content">
 <h1 id="samples">Samples</h1>
 <p>OWL comes with a set of successively more complex samples to aid in understanding how to use the OWL API.</p>
+<!-- ======================================================= -->
 <h2 id="ll08-sierpinski"><code>ll08-sierpinski</code></h2>
+<p>The latest sample, demonstrating multi-level instancing:</p>
+<ul>
+<li><p>One geometry that contains exactly one pyramid</p></li>
+<li><p>N levels of instances, each of which creates four shifted and scaled instances of the previous level</p></li>
+<li><p>Number of levels configurable via command-line, via <code>--num-levels &lt;N&gt;</code></p></li>
+</ul>
 <figure>
 <img src="samples/ll08-sierpinski.png.jpg" alt="samplepic" /><figcaption>samplepic</figcaption>
 </figure>
+<!-- ======================================================= -->
 <h2 id="ll07-groupofgroups"><code>ll07-groupOfGroups</code></h2>
 <figure>
 <img src="samples/ll07-groupOfGroups.png.jpg" alt="samplepic" /><figcaption>samplepic</figcaption>
 </figure>
+<!-- ======================================================= -->
 <h2 id="ll06-rtow-mixedgeometries"><code>ll06-rtow-mixedGeometries</code></h2>
+<ul>
+<li><p>Extends <code>ll05</code> by replacing some of the spheres with boxes</p></li>
+<li><p>Boxes are realized as triangle meshes, and organized in three different geometries (again, once per material).</p></li>
+<li><p>To support both boxes and user geometries this sample is the first to use two <em>different</em> groups (one triangle group, one user geom group)</p></li>
+<li><p>In this sample, device-code traces into the two different groups sequentially, then picks the closer of the two hitpoints</p></li>
+</ul>
 <figure>
 <img src="samples/ll06-rtow-mixedGeometries.png.jpg" alt="samplepic" /><figcaption>samplepic</figcaption>
 </figure>
+<!-- ======================================================= -->
 <h2 id="ll05-rtow"><code>ll05-rtow</code></h2>
+<ul>
+<li><p>The first-ever “real” example that re-implements ingowald’s original optix-6 based “Ray Tracing in one Weekend” example with OWL.</p></li>
+<li><p>Three different CH programs - one each for lambertian, metal, and dielectric.</p></li>
+<li><p>Spheres are organized in three different geometry groups (one per material type), each of which has multiple spheres</p></li>
+<li><p>Material parameters are stored per-material, in a buffer per each geometry (ie, the lambertian spheres geom has a buffer of lambertian matial data, etc)</p></li>
+</ul>
 <figure>
 <img src="samples/ll05-rtow.png.jpg" alt="samplepic" /><figcaption>samplepic</figcaption>
 </figure>
+<!-- ======================================================= -->
 <h2 id="ll04-usergeometry-boundsprog"><code>ll04-userGeometry-boundsProg</code></h2>
+<ul>
+<li><p>Similar to ll03, except that bounds are computed via a bounding box <em>program</em></p></li>
+<li><p>Bounds program specified in the device-program, and added to the user geometry type, then automatically run on device (on owl-allocated memory) when the accel structure needs rebuild (same as Optix 6 bounds program).</p></li>
+</ul>
 <figure>
 <img src="samples/ll04-userGeometry-boundsProg.png.jpg" alt="samplepic" /><figcaption>samplepic</figcaption>
 </figure>
+<!-- ======================================================= -->
 <h2 id="ll03-usergeometry-boundsbuffer"><code>ll03-userGeometry-boundsBuffer</code></h2>
+<ul>
+<li><p>Replaces the triangle meshes in ll02 with user geometry</p></li>
+<li><p>User geometry uses an intersection program to implement a sphere shape</p></li>
+<li><p>in this sample, bounding box information for user geoms is passed via a (host-supplied) buffer of precomputed bounding boxes</p></li>
+</ul>
 <figure>
 <img src="samples/ll03-userGeometry-boundsBuffer.png.jpg" alt="samplepic" /><figcaption>samplepic</figcaption>
 </figure>
+<!-- ======================================================= -->
 <h2 id="ll02-multipletrianglegroups"><code>ll02-multipleTriangleGroups</code></h2>
+<ul>
+<li><p>Replaces single box with eight different ones</p></li>
+<li><p>Each box is its own triangle mesh, with its own SBT entry</p></li>
+<li><p>SBT entry stores the material data, closest-hit shader pulls this to shade boxes with different colors.</p></li>
+<li><p>Still one accel that contains all eight meshes</p></li>
+</ul>
 <figure>
 <img src="samples/ll02-multipleTriangleGroups.png.jpg" alt="samplepic" /><figcaption>samplepic</figcaption>
 </figure>
+<!-- ======================================================= -->
 <h2 id="ll01-simpletriangles"><code>ll01-simpleTriangles</code></h2>
+<p>This was the very first sample ever implemented for OWL (at a time when OWL could do exactly this sample, and nothing else).</p>
+<p>Key features:</p>
+<ul>
+<li><p>a single triangle mesh (the box) with a single SBT entry</p></li>
+<li><p>a single bottom-level acceleration structure</p></li>
+<li><p>a minimalistic miss program that uses launch index to compute the black-and-red-squares pattern</p></li>
+<li><p>a closest-hit program that computes geometry normal and dot N-dot-D shading.</p></li>
+</ul>
 <figure>
 <img src="samples/ll01-simpleTriangles.png.jpg" alt="samplepic" /><figcaption>samplepic</figcaption>
 </figure>
