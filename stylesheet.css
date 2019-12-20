@@ -185,7 +185,7 @@ img[alt=samplepic] { width: 60%; }
     padding: 10px 0px 10px 20px;
     color: #fff;
 /*    background: url('images/blacktocat.png') #0090ff no-repeat 80% 50%;*/
-    background: url('images/blacktocat.png') #005000 no-repeat 80% 50%;
+    background: url('include/blacktocat-32.png') #005000 no-repeat 80% 50%;
     font-weight: 700;
 }
 
