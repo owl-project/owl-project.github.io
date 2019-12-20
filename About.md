@@ -21,7 +21,7 @@ compaction, setting up an SBT, etc.
 
 Key links:
 
-- For latest code on github: (https://github.com/owl-project/owl)
+- For latest code on github: [https://github.com/owl-project/owl](https://github.com/owl-project/owl)
 
-- For a brief (visual) overview over latest samples: (http://owl-project.github.io/Samples.html)
+- For a brief (visual) overview over latest samples: [http://owl-project.github.io/Samples.html](http://owl-project.github.io/Samples.html)
 
