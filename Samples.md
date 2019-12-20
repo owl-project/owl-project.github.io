@@ -17,7 +17,7 @@ The latest sample, demonstrating multi-level instancing:
 
 - Number of levels configurable via command-line, via `--num-levels <N>`
 
-![samplepic](samples/ll08-sierpinski.png.jpg)
+![PNG file produced by this sample](samples/ll08-sierpinski.png.jpg){.samplepic}
 
 
 
@@ -25,7 +25,7 @@ The latest sample, demonstrating multi-level instancing:
 <!-- ======================================================= -->
 ## `ll07-groupOfGroups`
 
-![samplepic](samples/ll07-groupOfGroups.png.jpg)
+![PNG file produced by this sample](samples/ll07-groupOfGroups.png.jpg){.samplepic}
 
 
 
@@ -47,7 +47,7 @@ The latest sample, demonstrating multi-level instancing:
 - In this sample, device-code traces into the two different groups
   sequentially, then picks the closer of the two hitpoints
 
-![samplepic](samples/ll06-rtow-mixedGeometries.png.jpg)
+![PNG file produced by this sample](samples/ll06-rtow-mixedGeometries.png.jpg){.samplepic}
 
 
 
@@ -69,7 +69,7 @@ The latest sample, demonstrating multi-level instancing:
   geometry (ie, the lambertian spheres geom has a buffer of lambertian
   matial data, etc)
 
-![samplepic](samples/ll05-rtow.png.jpg)
+![PNG file produced by this sample](samples/ll05-rtow.png.jpg){.samplepic}
 
 
 
@@ -84,7 +84,7 @@ The latest sample, demonstrating multi-level instancing:
   owl-allocated memory) when the accel structure needs rebuild (same
   as Optix 6 bounds program).
   
-![samplepic](samples/ll04-userGeometry-boundsProg.png.jpg)
+![PNG file produced by this sample](samples/ll04-userGeometry-boundsProg.png.jpg){.samplepic}
 
 
 
@@ -100,7 +100,7 @@ The latest sample, demonstrating multi-level instancing:
 - in this sample, bounding box information for user geoms is passed
   via a (host-supplied) buffer of precomputed bounding boxes
 
-![samplepic](samples/ll03-userGeometry-boundsBuffer.png.jpg)
+![PNG file produced by this sample](samples/ll03-userGeometry-boundsBuffer.png.jpg){.samplepic}
 
 
 
@@ -120,7 +120,7 @@ shade boxes with different colors.
 
 - Still one accel that contains all eight meshes
 
-![samplepic](samples/ll02-multipleTriangleGroups.png.jpg)
+![PNG file produced by this sample](samples/ll02-multipleTriangleGroups.png.jpg){.samplepic}
 
 
 
@@ -149,4 +149,4 @@ Key features:
 - a closest-hit program that computes geometry normal and dot N-dot-D shading.
 
 
-![samplepic](samples/ll01-simpleTriangles.png.jpg)
+![PNG file produced by this sample](samples/ll01-simpleTriangles.png.jpg){.samplepic}

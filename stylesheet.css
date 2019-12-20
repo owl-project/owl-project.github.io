@@ -166,7 +166,11 @@ br { clear:both; }
     letter-spacing: -1px;
 }
 
-img[alt=samplepic] { width: 60%; }
+img[alt=blasamplepic] { width: 60%; }
+
+.samplepic {
+    width: 60%; 
+}
 
 #header-github  {
     color: #fff;
@@ -435,6 +439,6 @@ p.caption {
 }
 p.caption:before {
   content: 'Figure ' counter(figure) ': ';
-  color: #0071C5;
+  color: #009000;
 }
 
