@@ -25,3 +25,4 @@ Key links:
 
 - For a brief (visual) overview over latest samples: [http://owl-project.github.io/Samples.html](http://owl-project.github.io/Samples.html)
 
+- Latest news/updates: [http://owl-project.github.io/News.html](http://owl-project.github.io/News.html)
