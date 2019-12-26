@@ -166,10 +166,12 @@ br { clear:both; }
     letter-spacing: -1px;
 }
 
-img[alt=blasamplepic] { width: 60%; }
-
 .samplepic {
     width: 60%; 
+}
+
+.widepic {
+    width: 80%; 
 }
 
 #header-github  {
