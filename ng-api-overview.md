@@ -9,7 +9,7 @@ this sample on
 GitHub](https://github.com/owl-project/owl/tree/master/samples/ng/s05-rtow)
 
 As a teaser of what the sample produces: [![PNG file produced by this
-sample](png/ng05-rtow.jpg){.widepic}](png/ng05-rtow.png)]
+sample](png/ng05-rtow.jpg){.widepic}](png/ng05-rtow.png)
 
 ## Device-Side Types and Programs
 
@@ -212,6 +212,6 @@ this sample on
 GitHub](https://github.com/owl-project/owl/tree/master/samples/ng/s05-rtow)
 
 As a teaser of what the sample produces: [![PNG file produced by this
-sample](png/ng05-rtow.jpg){.widepic}](png/ng05-rtow.png)]
+sample](png/ng05-rtow.jpg){.widepic}](png/ng05-rtow.png)
 
 
