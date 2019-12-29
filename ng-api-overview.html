@@ -1,0 +1,165 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <title>OWL-Project: ng-api-overview
+</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheet.css">
+  </head>
+
+  <body>
+    <div id="styleheader">
+      <div id="header-github">
+        <a id="forkme-banner" href="https://github.com/owl-project/owl">View on GitHub</a>
+      </div>
+      <div id="header-title">
+        OWL - The Optix 7 Wrapper Library
+      </div>
+
+      <div id="header-navbar">
+        <ul>
+<li id="selected"><a href="About.html">About</a></li><li id="selected"><a href="News.html">News</a></li><li id="selected"><a href="Samples.html">Samples</a></li>	</ul>
+      </div>
+      <div id="header-spacing"></div>
+    </div>
+
+    <div id="content-wrap">
+      <div id="content">
+<h1 id="owl-node-graph-quick-api-overview">OWL-Node Graph: Quick API Overview</h1>
+<p>This page gives a very brief overview over how to write programs using the owl node graph (<code>owl-ng</code>) API. Note this page is not intended as a full API spec, but only to give a rough idea of how the API works.</p>
+<p>For the full code of this sample, have a look at the <a href="https://github.com/owl-project/owl/tree/master/samples/ng/s05-rtow">full code for this sample on GitHub</a></p>
+<p>As a teaser of what the sample produces: <a href="png/ng05-rtow.png"><img src="png/ng05-rtow.jpg" alt="PNG file produced by this sample" class="widepic" /></a>]</p>
+<h2 id="device-side-types-and-programs">Device-Side Types and Programs</h2>
+<p>As with any optix program, the RTOW-ng sample consists of both host- and device-side parts. On the device-side, we create user geometry types by defining something as simple as</p>
+<pre><code>  struct MetalSpheresGeom {
+    MetalSphere *prims;
+  };</code></pre>
+<p>where each <code>MetalSphere</code> looks like this:</p>
+<pre><code>  struct Metal {
+    vec3f albedo;
+    float fuzz;
+  };
+  struct MetalSphere {
+    Sphere sphere;
+    Metal  material;
+  };</code></pre>
+<p>(obviously, same for <code>DielectricSphere</code> and <code>LambertianSphere</code>, too). Note that unlike Optix 6 we do <em>not</em> separately handle &quot;Apparence&quot; and &quot;Geometry&quot;, but require a single struct that combines them - Optix 6 &quot;fused&quot; those two parts using a compiler, which we (intentionally) do not use in OWL).</p>
+<h3 id="closest-hit-programs">Closest Hit Program(s)</h3>
+<p>For those types, we then also need to define the device-side closesthit, miss, and raygen programs; e.g.</p>
+<pre><code>template&lt;typename SpheresGeomType&gt;
+inline __device__ void intersectProg()
+{
+  const int primID = optixGetPrimitiveIndex();
+  const auto &amp;self
+    = owl::getProgramData&lt;SpheresGeomType&gt;().prims[primID];
+  
+  const vec3f org  = optixGetWorldRayOrigin();
+  const vec3f dir  = optixGetWorldRayDirection();
+  float hit_t      = optixGetRayTmax();
+  const float tmin = optixGetRayTmin();
+  ...
+  /* ray-sphere intersection code here */
+}
+OPTIX_INTERSECT_PROGRAM(MetalSpheres)()
+{ intersectProg&lt;MetalSpheresGeom&gt;(); }
+</code></pre>
+<p>Note that I used a template here to re-use the same intersection program across all three materials; this was convenient in this case, but is not a requirement of OWL.</p>
+<h3 id="user-geometry-bounds-programs">User Geometry: Bounds Program(s)</h3>
+<p>Similarly, we define our bounds programs:</p>
+<pre><code>template&lt;typename SphereGeomType&gt;
+inline __device__ void boundsProg(const void *geomData,
+                                  box3f &amp;primBounds,
+                                  const int primID)
+{
+  const SphereGeomType &amp;self = *(const SphereGeomType*)geomData;
+  const Sphere sphere = self.prims[primID].sphere;
+  primBounds = box3f()
+    .extend(sphere.center - sphere.radius)
+    .extend(sphere.center + sphere.radius);
+}
+OPTIX_BOUNDS_PROGRAM(MetalSpheres)(const void  *geomData,
+                                        box3f       &amp;primBounds,
+                                        const int    primID)
+{ boundsProg&lt;MetalSpheresGeom&gt;(geomData,primBounds,primID); }</code></pre>
+<p>Obviously we need those bounds progs only for user geometry; triangle geometry uses buffers for vertex and index buffers.</p>
+<h2 id="host-side">Host Side</h2>
+<p>Once the device-side types and programs are defined, on the host code we start off by creating a new owl context</p>
+<pre><code>  OWLContext context = owlContextCreate();</code></pre>
+<h3 id="geometry-type">Geometry Type</h3>
+<p>We then create a geometry <em>type</em> for our metal spheres</p>
+<pre><code>  OWLVarDecl metalSpheresGeomVars[] = {
+    { &quot;prims&quot;,  OWL_BUFPTR, OWL_OFFSETOF(MetalSpheresGeom,prims)},
+    { /* sentinal to mark end of list */ }
+  };
+  OWLGeomType metalSpheresGeomType
+    = owlGeomTypeCreate(context,
+                        OWL_GEOMETRY_USER,
+                        sizeof(MetalSpheresGeom),
+                        metalSpheresGeomVars,-1);
+  owlGeomTypeSetClosestHit(metalSpheresGeomType,0,
+                           module,&quot;MetalSpheres&quot;);
+  owlGeomTypeSetIntersectProg(metalSpheresGeomType,0,
+                              module,&quot;MetalSpheres&quot;);
+  owlGeomTypeSetBoundsProg(metalSpheresGeomType,
+                           module,&quot;MetalSpheres&quot;);</code></pre>
+<p>... which defines the programs to run on that type, as well as the sizeof the &quot;variables&quot; struct that this type uses (the <code>MetalSpheresGeom</code> type defined above). Obviously, we again do the same for dielectric and lambertian, too.</p>
+<h3 id="geometries">Geometries</h3>
+<p>Using these three tyeps, we can now create actual geometries that use these types. Note that in <em>this</em> example, each type actually contains <em>several</em> spheres of the given type, which we pass through a buffer:</p>
+<pre><code>  OWLBuffer metalSpheresBuffer
+    = owlDeviceBufferCreate(context,OWL_USER_TYPE(metalSpheres[0]),
+                            metalSpheres.size(),metalSpheres.data());
+  OWLGeom metalSpheresGeom
+    = owlGeomCreate(context,metalSpheresGeomType);
+  owlGeomSetPrimCount(metalSpheresGeom,metalSpheres.size());
+  owlGeomSetBuffer(metalSpheresGeom,&quot;prims&quot;,metalSpheresBuffer);</code></pre>
+<p>(again, same for dielectric and lambertian).</p>
+<p>We could of course have created a different geom for each sphere, too, but at significantly higher cost (for reasons we won't go into here).</p>
+<h3 id="accleration-structure">Accleration Structure</h3>
+<p>Once we have our three geometries we can create a accel structure/group over them via</p>
+<pre><code>  OWLGroup world
+    = owlUserGeomGroupCreate(context,3,userGeoms);
+  owlGroupBuildAccel(world);</code></pre>
+<p>... which will take care of all the required steps for - allocating memory for the bounds program and computing the bounds of all primitives in all geometries in this group - setting up the build inputs for the acceleration strucutre - allocating memory for the accel structure, and executing the three buidl stages, including compaction of the final BVH.</p>
+<h3 id="raygen...">RayGen...</h3>
+<p>then create miss and raygen program</p>
+<pre><code>  OWLVarDecl rayGenVars[] = {
+    { &quot;fbPtr&quot;,         OWL_BUFPTR, OWL_OFFSETOF(RayGenData,fbPtr)},
+    { &quot;fbSize&quot;,        OWL_INT2,   OWL_OFFSETOF(RayGenData,fbSize)},
+    { &quot;world&quot;,         OWL_GROUP,  OWL_OFFSETOF(RayGenData,world)},
+    { &quot;camera.org&quot;,    OWL_FLOAT3, OWL_OFFSETOF(RayGenData,camera.origin)},
+    ...
+  };
+  OWLRayGen rayGen
+    = owlRayGenCreate(context,module,&quot;rayGen&quot;,
+                      sizeof(RayGenData),
+                      rayGenVars,-1);</code></pre>
+<p>...set its parameters</p>
+<pre><code>  owlRayGenSetBuffer(rayGen,&quot;fbPtr&quot;,        frameBuffer);
+  owlRayGenSet2i    (rayGen,&quot;fbSize&quot;,       (const owl2i&amp;)fbSize);
+  owlRayGenSetGroup (rayGen,&quot;world&quot;,        world);
+  owlRayGenSet3f    (rayGen,&quot;camera.org&quot;,   (const owl3f&amp;)origin);
+  ...</code></pre>
+<h3 id="and-finally-launch">... and finally: Launch</h3>
+<p>Once all the scene is defined, all we have to do is tell owl to build the programs, pipeline, and shader binding table (SBT)</p>
+<pre><code>  owlBuildPrograms(context);
+  owlBuildPipeline(context);
+  owlBuildSBT(context);</code></pre>
+<p>... and launch the ray gen program</p>
+<pre><code>  owlRayGenLaunch2D(rayGen,fbSize.x,fbSize.y);</code></pre>
+<p>Then after the launch, read the frame buffer and write it to disk:</p>
+<pre><code>  const uint32_t *fb
+    = (const uint32_t*)owlBufferGetPointer(frameBuffer,0);
+  stbi_write_png(outFileName,fbSize.x,fbSize.y,4,
+                 fb,fbSize.x*sizeof(uint32_t));</code></pre>
+<h2 id="final-remarks">Final Remarks</h2>
+<p>For the full code of this sample, have a look at the <a href="https://github.com/owl-project/owl/tree/master/samples/ng/s05-rtow">full code for this sample on GitHub</a></p>
+<p>As a teaser of what the sample produces: <a href="png/ng05-rtow.png"><img src="png/ng05-rtow.jpg" alt="PNG file produced by this sample" class="widepic" /></a>]</p>
+      </div>
+    </div>
+
+      <div id="footer">
+        © 2019 Ingo Wald
+      </div>
+  </body>
+</html>

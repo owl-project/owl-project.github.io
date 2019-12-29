@@ -34,11 +34,47 @@
 <h1 id="what-is-owl">What is OWL?</h1>
 <p>OWL is a OptiX 7 based library that aims at providing some of the convenience of OptiX 6's Node Graph API on top of OptiX 7. This aims at making it easier to port existing OptiX 6-style applications over to OptiX 7, and, in particular, to make it easier to get started with OptiX 7 even without having a full grasp of things like Shader Binding Tables, Multi-GPU rendering, etc.</p>
 <p>OWL is still in early stages, which means that it as yet lacks many of the features that OptiX 6 offered, and in particular, that many things are still changing rather rapidly; however, it already contains several working mini-samples, so at the very least should allow to serve as a &quot;show-and-tell&quot; example of how to set up a OptiX 7 pipeline, how to build acceleration structures, how to do things like compaction, setting up an SBT, etc.</p>
-<p>Key links:</p>
+<p>For a (very) rough idea of how the node graph API works, see <a href="ng-api-overview.html">this brief walk-through through the <code>ng05-rtow</code> sample</a>.</p>
+<h1 id="key-links">Key links</h1>
 <ul>
 <li><p>For latest code on github: <a href="https://github.com/owl-project/owl" class="uri">https://github.com/owl-project/owl</a></p></li>
 <li><p>For a brief (visual) overview over latest samples: <a href="http://owl-project.github.io/Samples.html" class="uri">http://owl-project.github.io/Samples.html</a></p></li>
 <li><p>Latest news/updates: <a href="http://owl-project.github.io/News.html" class="uri">http://owl-project.github.io/News.html</a></p></li>
+</ul>
+<h1 id="currently-already-supported-functionality">Currently Already Supported Functionality</h1>
+<ul>
+<li><p>Buffers (realized via CUDA allocated memory), similar to the old Optix 6 <code>optix::Buffer</code> type</p></li>
+<li><p>Abstraction for <em>geometries</em> and <em>geometry types</em> (i.e., shapes that can be intersected with a ray)</p>
+<ul>
+<li><p>geometry <em>types</em> define the optix programs (closesthit, anyhit, bounds, etc) that run on the given geometry, as well as the <em>type</em> of data they run on</p></li>
+<li><p><em>geometries</em> are specific instances of a given geometry type (not to be confused with a &quot;Instance&quot; object), which is similar to the original Optix 6 <code>optix::GeometryInstance</code> type.</p></li>
+<li><p>OWL explicitly supports both (hardware-accelerated) triangle geometry types (specified through index and vertex buffers) as well as user geometry types (that use intersection programs and bounds programs)</p></li>
+<li><p>for user geometries, OWL provides functionality to automate most of the process for computing device-side bounding boxes through bounds program (including building of the kernels, allocation of the memory, parametrization and executing the kernel, etc).</p></li>
+</ul></li>
+<li><p>Creation of Groups and Acceleration Structures</p>
+<ul>
+<li><p>OWL abstracts acclerations structures through &quot;groups&quot; built over geometries, with each group containing exactly one acceleration strcutures over all the geometries in that group:</p></li>
+<li><p><code>TriangleGeomGroups</code>: a groupover triangle geometries, hardware accelerated where available.</p></li>
+<li><p><code>UserGeomGroups</code>: a group over user geometries; in particular, will simplify the process of creating the user geometry bounds that go into the BVH build)</p></li>
+<li><p><code>InstanceGroups</code>: a group over instance of other groups.</p></li>
+<li><p>building acceleration structures is usually as simple as creating the group, and calling <code>lloAccelBuild</code> (ll layer) resp owlAccelBuild (ng layer)</p></li>
+</ul></li>
+<li><p>Instancing: OWL supports instancing through Instance Groups</p>
+<ul>
+<li>Multi-Level Instancing is explicitly supported by instance groups containing other instance groups (see sample <code>s08-sierpinki</code> for an example)</li>
+</ul></li>
+<li><p>Abstraction/Automatic Creation of Shader Binding Table</p>
+<ul>
+<li>owl will automatically put the created groups/instances in the right order, allocate memory for the SBT, and create the respective entries.</li>
+</ul></li>
+<li><p>Multi-Device: OWL Supports multi-device rendering, on both ll and ng layer.</p></li>
+</ul>
+<h1 id="currently-still-missing-functionality">Currently still <em>Missing</em> Functionality</h1>
+<ul>
+<li><p>Currently support only <em>building</em> geometries and acceleration structures, but did not yet work on changing/<em>re-</em>building either geometries or accleleration structures.</p></li>
+<li><p>Error handling and sanity checking is still minimal. In particular the ll layer contains a lot of assertions for sanity-checking, but those will obviously work only in debug mode.</p></li>
+<li><p>Device-side API is still minimalistic, and not yet</p></li>
+<li><p>&quot;LaunchParams&quot; are not yet supported. Currently best way of passing parameters to a ray gen program is through that program's</p></li>
 </ul>
       </div>
     </div>

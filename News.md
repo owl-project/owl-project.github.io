@@ -1,5 +1,15 @@
 # OWL - News / Updates
 
+<!-- ======================================================= -->
+## Dev 29, 2019 - v0.5.3 with first RTOW example on Node Graph Layer
+
+Node graph layer shows first signs of life, now supporting the full
+"RTOW" ([Ray Tracing in One Weekend](https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf])) sample.
+
+For a (very) rough idea of how the node graph API works, see
+  [this brief walk-through through the `ng05-rtow` sample](ng-api-overview.html).
+
+<!-- ======================================================= -->
 ## Dev 25, 2019 - v0.5.2 and first successful app-port
 
 - v0.5.2 adds first part of node graph layer, with `ng01-simpleTriangles`
@@ -14,11 +24,13 @@
 
 [![PNG file produced by this sample](png/rtxpkd.jpg){.widepic}](png/rtxpkd.png)]
 
+<!-- ======================================================= -->
 ## Dec 19, 2019 - First Public Version on Github
 
 - pushed version 0.5.0; still very early, but ll-api layer's version
   of "Ray Tracing in One Weekend" working reliably on both Linux and
   Windows.
 
+<!-- ======================================================= -->
 ## Dec 16, 2019 - First Draft of Web Page
 
