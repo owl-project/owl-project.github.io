@@ -115,7 +115,7 @@ OPTIX_BOUNDS_PROGRAM(MetalSpheres)(const void  *geomData,
   owlGeomSetBuffer(metalSpheresGeom,&quot;prims&quot;,metalSpheresBuffer);</code></pre>
 <p>(again, same for dielectric and lambertian).</p>
 <p>We could of course have created a different geom for each sphere, too, but at significantly higher cost (for reasons we won't go into here).</p>
-<h3 id="accleration-structure">Accleration Structure</h3>
+<h3 id="acceleration-structure">Acceleration Structure</h3>
 <p>Once we have our three geometries we can create a accel structure/group over them via</p>
 <pre><code>  OWLGroup world
     = owlUserGeomGroupCreate(context,3,userGeoms);

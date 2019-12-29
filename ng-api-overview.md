@@ -143,7 +143,7 @@ of the given type, which we pass through a buffer:
 We could of course have created a different geom for each sphere, too,
 but at significantly higher cost (for reasons we won't go into here).
 
-### Accleration Structure
+### Acceleration Structure
 
 Once we have our three geometries we can create a accel structure/group 
 over them via
