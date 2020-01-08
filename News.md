@@ -1,6 +1,37 @@
 # OWL - News / Updates
 
 <!-- ======================================================= -->
+## Jan 7, 2020 - first prototype with (most of) optix7course OBJ viewer
+
+As of just a few minutes ago, OWL has passed another milestone in that
+I just managed to port the course tutorial from our Siggraph 2019
+course on optix 7 ([original code at
+https://github.com/ingowald/optix7course](https://github.com/ingowald/optix7course))
+to also work on OWL. 
+
+There's still a two caveats with this code, namely that OWL does not
+yet that I do not yet expose denoising, and that it does not yet
+support a native "OWLTexture" type; both of which the final example in
+that course tutorial relied upon. For denoising, there was (as yet) no other
+way but to disable denoising in this sample; for texturing, however, I
+could actually use the existing CUDA based texture code, and simply upload
+the cudaTextureObject's as SBT data, so texturing does actually work. 
+
+There were several bugs discovered in this sample, and quite a few
+more missing pieces than expected (eg, I had to add support for
+multiple ray types, multiple miss programs, variables for user types,
+and a lot of bug fixes); on the upside, the resulting code is (as
+hoped) significnatly simpler than the original one, and the current
+use of CUDA textures is a nice demonstration of how easy it is to do
+"CUDA interop".
+
+Code will need some more cleanup before release, but first sample pic
+here:
+
+[![PNG file produced by this sample](png/optix7course-on-owl.jpg){.widepic}](png/optix7course-on-owl.png)
+
+
+<!-- ======================================================= -->
 ## Dev 29, 2019 - v0.5.3 with first RTOW example on Node Graph Layer
 
 Node graph layer shows first signs of life, now supporting the full
@@ -22,7 +53,7 @@ For a (very) rough idea of how the node graph API works, see
   sets (a 'supersoot' particle and a crack simulation) also referenced in
   [http://www.sci.utah.edu/~wald/Publications/2015/pkd/pkd.pdf](http://www.sci.utah.edu/~wald/Publications/2015/pkd/pkd.pdf)
 
-[![PNG file produced by this sample](png/rtxpkd.jpg){.widepic}](png/rtxpkd.png)]
+[![PNG file produced by this sample](png/rtxpkd.jpg){.widepic}](png/rtxpkd.png)
 
 <!-- ======================================================= -->
 ## Dec 19, 2019 - First Public Version on Github
@@ -33,4 +64,7 @@ For a (very) rough idea of how the node graph API works, see
 
 <!-- ======================================================= -->
 ## Dec 16, 2019 - First Draft of Web Page
+
+- this is the beginning of this new feed ...
+
 
