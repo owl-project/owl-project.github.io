@@ -56,18 +56,18 @@ The latest sample, demonstrating multi-level instancing:
 <!-- ======================================================= -->
 ## `ll05-rtow`
 
-- The first-ever "real" example that re-implements ingowald's
-  original optix-6 based "Ray Tracing in one Weekend" example
+- The first-ever "real" example that re-implements Ingo Wald
+  original OptiX-6 based "Ray Tracing in one Weekend" example
   with OWL.
 
-- Three different CH programs - one each for lambertian, metal, and dielectric.
+- Three different CH programs - one each for Lambertian, Metal, and Dielectric.
 
 - Spheres are organized in three different geometry groups (one per
-  material type), each of which has multiple spheres
+  material type), each of which has multiple spheres.
 
 - Material parameters are stored per-material, in a buffer per each
-  geometry (ie, the lambertian spheres geom has a buffer of lambertian
-  matial data, etc)
+  geometry (i.e., the Lambertian spheres geom has a buffer of Lambertian
+  material data, etc).
 
 ![PNG file produced by this sample](samples/ll05-rtow.png.jpg){.samplepic}
 
@@ -82,7 +82,7 @@ The latest sample, demonstrating multi-level instancing:
 - Bounds program specified in the device-program, and added to the
   user geometry type, then automatically run on device (on
   owl-allocated memory) when the accel structure needs rebuild (same
-  as Optix 6 bounds program).
+  as OptiX 6 bounds program).
   
 ![PNG file produced by this sample](samples/ll04-userGeometry-boundsProg.png.jpg){.samplepic}
 

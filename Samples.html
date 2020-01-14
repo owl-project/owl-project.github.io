@@ -61,10 +61,10 @@
 <!-- ======================================================= -->
 <h2 id="ll05-rtow"><code>ll05-rtow</code></h2>
 <ul>
-<li><p>The first-ever &quot;real&quot; example that re-implements ingowald's original optix-6 based &quot;Ray Tracing in one Weekend&quot; example with OWL.</p></li>
-<li><p>Three different CH programs - one each for lambertian, metal, and dielectric.</p></li>
-<li><p>Spheres are organized in three different geometry groups (one per material type), each of which has multiple spheres</p></li>
-<li><p>Material parameters are stored per-material, in a buffer per each geometry (ie, the lambertian spheres geom has a buffer of lambertian matial data, etc)</p></li>
+<li><p>The first-ever &quot;real&quot; example that re-implements Ingo Wald original OptiX-6 based &quot;Ray Tracing in one Weekend&quot; example with OWL.</p></li>
+<li><p>Three different CH programs - one each for Lambertian, Metal, and Dielectric.</p></li>
+<li><p>Spheres are organized in three different geometry groups (one per material type), each of which has multiple spheres.</p></li>
+<li><p>Material parameters are stored per-material, in a buffer per each geometry (i.e., the Lambertian spheres geom has a buffer of Lambertian material data, etc).</p></li>
 </ul>
 <div class="figure">
 <img src="samples/ll05-rtow.png.jpg" alt="PNG file produced by this sample" class="samplepic" />
@@ -74,7 +74,7 @@
 <h2 id="ll04-usergeometry-boundsprog"><code>ll04-userGeometry-boundsProg</code></h2>
 <ul>
 <li><p>Similar to ll03, except that bounds are computed via a bounding box <em>program</em></p></li>
-<li><p>Bounds program specified in the device-program, and added to the user geometry type, then automatically run on device (on owl-allocated memory) when the accel structure needs rebuild (same as Optix 6 bounds program).</p></li>
+<li><p>Bounds program specified in the device-program, and added to the user geometry type, then automatically run on device (on owl-allocated memory) when the accel structure needs rebuild (same as OptiX 6 bounds program).</p></li>
 </ul>
 <div class="figure">
 <img src="samples/ll04-userGeometry-boundsProg.png.jpg" alt="PNG file produced by this sample" class="samplepic" />
