@@ -13,7 +13,7 @@ sample](png/ng05-rtow.jpg){.widepic}](png/ng05-rtow.png)
 
 ## Device-Side Types and Programs
 
-As with any optix program, the RTOW-ng sample consists of both host-
+As with any OptiX program, the RTOW-ng sample consists of both host-
 and device-side parts. On the device-side, we create user geometry
 types by defining something as simple as
 
@@ -36,8 +36,8 @@ where each `MetalSphere` looks like this:
   };
 ```
 (obviously, same for `DielectricSphere` and `LambertianSphere`, too).
-Note that unlike Optix 6 we do *not* separately handle "Apparence" and "Geometry",
-but require a single struct that combines them - Optix 6 "fused" those
+Note that unlike OptiX 6 we do *not* separately handle "Appearance" and "Geometry",
+but require a single struct that combines them - OptiX 6 "fused" those
 two parts using a compiler, which we (intentionally) do not use in OWL).
 
 ### Closest Hit Program(s)
@@ -121,11 +121,11 @@ We then create a geometry *type* for our metal spheres
 ... which defines the programs to run on that type, as well as the
 sizeof the "variables" struct that this type uses (the
 `MetalSpheresGeom` type defined above). Obviously, we again do the same for
-dielectric and lambertian, too.
+Dielectric and Lambertian, too.
 
 ### Geometries
 
-Using these three tyeps, we can now create actual geometries that use these types.
+Using these three types, we can now create actual geometries that use these types.
 Note that in *this* example, each type actually contains *several* spheres
 of the given type, which we pass through a buffer:
 
@@ -138,7 +138,7 @@ of the given type, which we pass through a buffer:
   owlGeomSetPrimCount(metalSpheresGeom,metalSpheres.size());
   owlGeomSetBuffer(metalSpheresGeom,"prims",metalSpheresBuffer);
 ```
-(again, same for dielectric and lambertian).
+(again, same for Dielectric and Lambertian).
 
 We could of course have created a different geom for each sphere, too,
 but at significantly higher cost (for reasons we won't go into here).
@@ -155,8 +155,8 @@ over them via
 
 ... which will take care of all the required steps for
 - allocating memory for the bounds program and computing the bounds of all primitives in all geometries in this group
-- setting up the build inputs for the acceleration strucutre
-- allocating memory for the accel structure, and executing the three buidl stages, including compaction of the final BVH.
+- setting up the build inputs for the acceleration structure
+- allocating memory for the accel structure, and executing the three build stages, including compaction of the final BVH.
 
 ### RayGen...
 

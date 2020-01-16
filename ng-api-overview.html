@@ -31,7 +31,7 @@
 <p>For the full code of this sample, have a look at the <a href="https://github.com/owl-project/owl/tree/master/samples/ng/s05-rtow">full code for this sample on GitHub</a></p>
 <p>As a teaser of what the sample produces: <a href="png/ng05-rtow.png"><img src="png/ng05-rtow.jpg" alt="PNG file produced by this sample" class="widepic" /></a></p>
 <h2 id="device-side-types-and-programs">Device-Side Types and Programs</h2>
-<p>As with any optix program, the RTOW-ng sample consists of both host- and device-side parts. On the device-side, we create user geometry types by defining something as simple as</p>
+<p>As with any OptiX program, the RTOW-ng sample consists of both host- and device-side parts. On the device-side, we create user geometry types by defining something as simple as</p>
 <pre><code>  struct MetalSpheresGeom {
     MetalSphere *prims;
   };</code></pre>
@@ -44,7 +44,7 @@
     Sphere sphere;
     Metal  material;
   };</code></pre>
-<p>(obviously, same for <code>DielectricSphere</code> and <code>LambertianSphere</code>, too). Note that unlike Optix 6 we do <em>not</em> separately handle &quot;Apparence&quot; and &quot;Geometry&quot;, but require a single struct that combines them - Optix 6 &quot;fused&quot; those two parts using a compiler, which we (intentionally) do not use in OWL).</p>
+<p>(obviously, same for <code>DielectricSphere</code> and <code>LambertianSphere</code>, too). Note that unlike OptiX 6 we do <em>not</em> separately handle &quot;Appearance&quot; and &quot;Geometry&quot;, but require a single struct that combines them - OptiX 6 &quot;fused&quot; those two parts using a compiler, which we (intentionally) do not use in OWL).</p>
 <h3 id="closest-hit-programs">Closest Hit Program(s)</h3>
 <p>For those types, we then also need to define the device-side closesthit, miss, and raygen programs; e.g.</p>
 <pre><code>template&lt;typename SpheresGeomType&gt;
@@ -103,9 +103,9 @@ OPTIX_BOUNDS_PROGRAM(MetalSpheres)(const void  *geomData,
                               module,&quot;MetalSpheres&quot;);
   owlGeomTypeSetBoundsProg(metalSpheresGeomType,
                            module,&quot;MetalSpheres&quot;);</code></pre>
-<p>... which defines the programs to run on that type, as well as the sizeof the &quot;variables&quot; struct that this type uses (the <code>MetalSpheresGeom</code> type defined above). Obviously, we again do the same for dielectric and lambertian, too.</p>
+<p>... which defines the programs to run on that type, as well as the sizeof the &quot;variables&quot; struct that this type uses (the <code>MetalSpheresGeom</code> type defined above). Obviously, we again do the same for Dielectric and Lambertian, too.</p>
 <h3 id="geometries">Geometries</h3>
-<p>Using these three tyeps, we can now create actual geometries that use these types. Note that in <em>this</em> example, each type actually contains <em>several</em> spheres of the given type, which we pass through a buffer:</p>
+<p>Using these three types, we can now create actual geometries that use these types. Note that in <em>this</em> example, each type actually contains <em>several</em> spheres of the given type, which we pass through a buffer:</p>
 <pre><code>  OWLBuffer metalSpheresBuffer
     = owlDeviceBufferCreate(context,OWL_USER_TYPE(metalSpheres[0]),
                             metalSpheres.size(),metalSpheres.data());
@@ -113,14 +113,14 @@ OPTIX_BOUNDS_PROGRAM(MetalSpheres)(const void  *geomData,
     = owlGeomCreate(context,metalSpheresGeomType);
   owlGeomSetPrimCount(metalSpheresGeom,metalSpheres.size());
   owlGeomSetBuffer(metalSpheresGeom,&quot;prims&quot;,metalSpheresBuffer);</code></pre>
-<p>(again, same for dielectric and lambertian).</p>
+<p>(again, same for Dielectric and Lambertian).</p>
 <p>We could of course have created a different geom for each sphere, too, but at significantly higher cost (for reasons we won't go into here).</p>
 <h3 id="acceleration-structure">Acceleration Structure</h3>
 <p>Once we have our three geometries we can create a accel structure/group over them via</p>
 <pre><code>  OWLGroup world
     = owlUserGeomGroupCreate(context,3,userGeoms);
   owlGroupBuildAccel(world);</code></pre>
-<p>... which will take care of all the required steps for - allocating memory for the bounds program and computing the bounds of all primitives in all geometries in this group - setting up the build inputs for the acceleration strucutre - allocating memory for the accel structure, and executing the three buidl stages, including compaction of the final BVH.</p>
+<p>... which will take care of all the required steps for - allocating memory for the bounds program and computing the bounds of all primitives in all geometries in this group - setting up the build inputs for the acceleration structure - allocating memory for the accel structure, and executing the three build stages, including compaction of the final BVH.</p>
 <h3 id="raygen...">RayGen...</h3>
 <p>then create miss and raygen program</p>
 <pre><code>  OWLVarDecl rayGenVars[] = {
