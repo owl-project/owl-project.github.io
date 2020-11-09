@@ -1,4 +1,4 @@
-![](about/collage-owl.jpg)
+![](about/collage-owl.jpg){.widepic}
 
 <!--- ------------------------------------------------------- -->
 What is OWL?
