@@ -1,6 +1,6 @@
 # Samples
 
-## Some sample use projects/papers that recently used OWL:
+## Some sample projects/papers that recently used OWL:
 
 - Moana on OWL/OptiX (Oct 2020)
 
