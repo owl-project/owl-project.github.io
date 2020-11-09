@@ -6,13 +6,13 @@
 
   (https://ingowald.blog/2020/10/26/moana-on-rtx-first-light/)
 
-  ![Sample "Moana on OWL/OptiX" images](jpg/collage-moana.jpg)
+  ![Sample "Moana on OWL/OptiX" images](jpg/collage-moana.jpg){.samplepic}
   
 - "VisII - A Python-Scriptable Virtual Scene Imaging Interface (2020)
 
   (https://github.com/owl-project/ViSII)
 
-  ![Sample "VisII" images](jpg/collage-visii.jpg)
+  ![Sample "VisII" images](jpg/collage-visii.jpg){.samplepic}
   
 - "Ray Tracing Structured AMR Data Using ExaBricks". I Wald, S
   Zellmann, W Usher, N Morrical, U Lang, and V Pascucci. IEEE
@@ -21,7 +21,7 @@
   
   (https://www.willusher.io/publications/exabrick)
   
-  ![Sample "ExaBricks" images (Image Credits: See Authors)](jpg/collage-exabricks.jpg)
+  ![Sample "ExaBricks" images (Image Credits: See Authors)](jpg/collage-exabricks.jpg){.samplepic}
   
 - "Accelerating Force-Directed Graph Drawing with RT Cores".  S
   Zellmann, M Weier, I Wald, IEEE Vis Short
@@ -46,7 +46,7 @@
   
   (https://vis.uni-koeln.de/forschung/publikationen/finding-efficient-spatial-distributions-for-massively-instanced-3-d-models)
  
-  ![Sample "Data Parallel Ray Tracing w/ OWL" images (Image Credits: See Authors)](jpg/collage-instances.jpg)
+  ![Sample "Data Parallel Ray Tracing w/ OWL" images (Image Credits: See Authors)](jpg/collage-instances.jpg){.samplepic}
  
 - "High-Quality Rendering of Glyphs Using Hardware-Accelerated Ray
   Tracing".  S Zellmann, M Aumüller, N Marshak, I Wald.  Eurographics
@@ -54,7 +54,7 @@
   
   (https://vis.uni-koeln.de/forschung/publikationen/high-quality-rendering-of-glyphs-using-hardware-accelerated-ray-tracing)
 
-  ![Sample "ExaBricks" images (Image Credits: See Authors)](jpg/collage-tubes.jpg)
+  ![Sample "ExaBricks" images (Image Credits: See Authors)](jpg/collage-tubes.jpg){.samplepic}
   
 - "RTX Beyond Ray Tracing: Exploring the Use of Hardware Ray Tracing
   Cores for Tet-Mesh Point Location". I Wald, W Usher, N Morrical, L
