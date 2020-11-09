@@ -1,6 +1,29 @@
 # OWL - News / Updates
 
 <!-- ======================================================= -->
+## Nov 8, 2020 - first public "introduction" of OWL on my Blog
+
+Though OWL has been mentioned previously in various places, yesterday
+OWL was - for the first time - introduced as now being public, stable,
+and ready-to-use.
+
+<!-- ======================================================= -->
+## Oct 25-30 - OWL-based "ExaBricks" paper at IEEE Vis
+
+This week at IEEE Vis we presented our "ExaBricks" paper on 
+AMR data rendering, written completely in OWL: 
+https://www.willusher.io/publications/exabrick
+
+<!-- ======================================================= -->
+## Oct 17, 2020 - first "Version 1.0" 
+
+After fixing the last few bugs and feature requests that stood in the
+way of doing so, OWL has finally been tagged as the first official,
+complete, stable release ... V1.0
+
+
+
+<!-- ======================================================= -->
 ## Jan 7, 2020 - first prototype with (most of) optix7course OBJ viewer
 
 As of just a few minutes ago, OWL has passed another milestone in that

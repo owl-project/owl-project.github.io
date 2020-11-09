@@ -4,27 +4,28 @@
 What is OWL?
 ============
 
-OWL is a OptiX 7 based library that aims at providing some of the
-convenience of OptiX 6's Node Graph API on top of OptiX 7. This aims
-at making it easier to port existing OptiX 6-style applications over
-to OptiX 7, and, in particular, to make it easier to get started with
-OptiX 7 even without having a full grasp of things like Shader Binding
-Tables, Multi-GPU rendering, etc.
+OWL is a convenience/productivity-oriented library on top of OptiX
+7.x, and aims at making it easier to write OptiX programs by taking
+some of the more arcane arts (like knowing what a Shader Binding Table
+is, and how to actually build it), and doing that for the user. For
+example, assuming the node graph (ie, the programs, geometries, and
+acceleration structures) have already been built, the shader binding
+table (SBT) can be built and properly populated by a single call
+`owlBuildSBT(context)`.
 
-OWL is still in early stages, which means that it as yet lacks many of
-the features that OptiX 6 offered, and in particular, that many things
-are still changing rather rapidly; however, it already contains
-several working mini-samples, so at the very least should allow to
-serve as a "show-and-tell" example of how to set up a OptiX 7
-pipeline, how to build acceleration structures, how to do things like
-compaction, setting up an SBT, etc.
+In addition, OWL also allows for somewhat higher-level abstractions
+than native OptiX+CUDA for operations such as creating device buffers,
+uploading data, building shader programs and pipelines, building
+acceleration structures, etc. 
 
-For a (very) rough idea of how the node graph API works, see
-  [this brief walk-through through the `ng05-rtow` sample](ng-api-overview.html).
+Fore more details on OWL, please see the following resources:
 
-
-Key links
-=========
+  
+- A recent ["Introducing OWL" blog
+  post](https://ingowald.blog/2020/11/08/introducing-owl-a-node-graph-abstraction-layer-on-top-of-optix-7/)
+  that gives a high-level motivation/overview what the project is
+  about, and where it currently is (though without much detail on how
+  OWL actually works)
 
 - For latest code on github: [https://github.com/owl-project/owl](https://github.com/owl-project/owl)
 
@@ -33,10 +34,20 @@ Key links
 - Latest news/updates: [http://owl-project.github.io/News.html](http://owl-project.github.io/News.html)
 
 
-Currently Already Supported Functionality
-=========================================
+Key Concepts Supported in OWL
+=============================
+
+OWL builds on the following key concepts:
 
 - Buffers (realized via CUDA allocated memory), similar to the old Optix 6 `optix::Buffer` type
+
+    - Buffers can be either device buffers (corresponding to regular
+      cudaMalloc'ed memory), host-pinned memory buffers, or managed
+      memory buffers.
+	  
+	- Buffers can be created over all sorts of trivially copyable
+      types like FLOAT3, INT, etc, but also over advanced types like
+      (CUDA) textures or other buffers.
 
 - Abstraction for *geometries* and *geometry types* (i.e., shapes that
   can be intersected with a ray)
@@ -53,10 +64,10 @@ Currently Already Supported Functionality
     (specified through index and vertex buffers) as well as user geometry types
 	(that use intersection programs and bounds programs)
 	
-    - for user geometries, OWL provides functionality to automate most
-    of the process for computing device-side bounding boxes through bounds program
-	(including building of the kernels, allocation of the memory, parametrization
-	and executing the kernel, etc).
+    - for user geometries, OWL provides functionality to automate the
+	process for computing device-side bounding boxes through bounds
+	program (including building of the kernels, allocation of the
+	memory, parametrization and executing the kernel, etc).
 	
 - Creation of Groups and Acceleration Structures
 
@@ -71,35 +82,42 @@ Currently Already Supported Functionality
      will simplify the process of creating the user geometry bounds that go into
 	 the BVH build)
 
-    - `InstanceGroups`: a group over instance of other groups.
+    - `InstanceGroups`: a group over instance of other
+      groups. 
 	
     - building acceleration structures is usually as simple as creating the group,
-    and calling `lloAccelBuild` (ll layer) resp owlAccelBuild (ng layer)
+    and calling `owlGroupBuildAccel(group)`. Refitting and motion blur are supported.
 
 - Instancing: OWL supports instancing through Instance Groups
 
     - Multi-Level Instancing is explicitly supported by instance groups containing other
   instance groups (see sample `s08-sierpinki` for an example)
 
-- Abstraction/Automatic Creation of Shader Binding Table 
+- Abstraction/Automatic Creation of Shader Binding Table, Programs, etc
 
     - owl will automatically put the created groups/instances in the right order,
     allocate memory for the SBT, and create the respective entries.
 	
 - Multi-Device: OWL Supports multi-device rendering, on both ll and ng layer.
 
+- Parametrization of device-side Geometries, Launch Params, etc, via Variables
+
+	- which variables a device-side object has gets defined by the user; these
+	  can then be configured via calls like, e.g., 
+	  
+    owlParamsSetGroup(myLaunchParams,"world",world")
+
+- support for launch parameters, asynchronous launches, and CUDA interop.
+
+
 Currently still *Missing* Functionality
 =======================================
 
-- Currently support only *building* geometries and acceleration structures,
-  but did not yet work on changing/*re-*building either geometries
-  or accleleration structures.
+- OWL currently supports both triangle and user-definable geometry, but
+  does not yet support the `Curves` geometry added in OptiX 7.2.
   
-- Error handling and sanity checking is still minimal. In particular
-  the ll layer contains a lot of assertions for sanity-checking, but
-  those will obviously work only in debug mode.
+- OWL does not yet explicitly expose the denoiser. The OptiX denoiser
+  *can* be called directly on the OWL-buffers used by the application,
+  but currently still still has to be done manually.
   
-- Device-side API is still minimalistic, and not yet
-
-- "LaunchParams" are not yet supported. Currently best way of passing
-parameters to a ray gen program is through that program's
+  

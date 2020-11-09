@@ -28,6 +28,15 @@
       <div id="content">
 <h1 id="owl---news-updates">OWL - News / Updates</h1>
 <!-- ======================================================= -->
+<h2 id="nov-8-2020---first-public-introduction-of-owl-on-my-blog">Nov 8, 2020 - first public “introduction” of OWL on my Blog</h2>
+<p>Though OWL has been mentioned previously in various places, yesterday OWL was - for the first time - introduced as now being public, stable, and ready-to-use.</p>
+<!-- ======================================================= -->
+<h2 id="oct-25-30---owl-based-exabricks-paper-at-ieee-vis">Oct 25-30 - OWL-based “ExaBricks” paper at IEEE Vis</h2>
+<p>This week at IEEE Vis we presented our “ExaBricks” paper on AMR data rendering, written completely in OWL: https://www.willusher.io/publications/exabrick</p>
+<!-- ======================================================= -->
+<h2 id="oct-17-2020---first-version-1.0">Oct 17, 2020 - first “Version 1.0”</h2>
+<p>After fixing the last few bugs and feature requests that stood in the way of doing so, OWL has finally been tagged as the first official, complete, stable release … V1.0</p>
+<!-- ======================================================= -->
 <h2 id="jan-7-2020---first-prototype-with-most-of-optix7course-obj-viewer">Jan 7, 2020 - first prototype with (most of) optix7course OBJ viewer</h2>
 <p>As of just a few minutes ago, OWL has passed another milestone in that I just managed to port the course tutorial from our Siggraph 2019 course on optix 7 (<a href="https://github.com/ingowald/optix7course">original code at https://github.com/ingowald/optix7course</a>) to also work on OWL.</p>
 <p>There’s still a two caveats with this code, namely that OWL does not yet that I do not yet expose denoising, and that it does not yet support a native “OWLTexture” type; both of which the final example in that course tutorial relied upon. For denoising, there was (as yet) no other way but to disable denoising in this sample; for texturing, however, I could actually use the existing CUDA based texture code, and simply upload the cudaTextureObject’s as SBT data, so texturing does actually work.</p>

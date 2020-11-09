@@ -1,12 +1,94 @@
 # Samples
 
-OWL comes with a set of successively more complex samples to aid in
-understanding how to use the OWL API.
+## Some sample use projects/papers that recently used OWL:
+
+- Moana on OWL/OptiX (Oct 2020)
+
+  (https://ingowald.blog/2020/10/26/moana-on-rtx-first-light/)
+
+  ![Sample "Moana on OWL/OptiX" images](jpg/collage-moana.jpg)
+  
+- "VisII - A Python-Scriptable Virtual Scene Imaging Interface (2020)
+
+  (https://github.com/owl-project/ViSII)
+
+  ![Sample "VisII" images](jpg/collage-visii.jpg)
+  
+- "Ray Tracing Structured AMR Data Using ExaBricks". I Wald, S
+  Zellmann, W Usher, N Morrical, U Lang, and V Pascucci. IEEE
+  TVCG(Proceedings of IEEE Vis
+  2020).
+  
+  (https://www.willusher.io/publications/exabrick)
+  
+  ![Sample "ExaBricks" images (Image Credits: See Authors)](jpg/collage-exabricks.jpg)
+  
+- "Accelerating Force-Directed Graph Drawing with RT Cores".  S
+  Zellmann, M Weier, I Wald, IEEE Vis Short
+  Papers 2020.
+  
+  (https://arxiv.org/pdf/2008.11235.pdf)
+ 
+ 
+ - "A Virtual Frame Buffer Abstraction for Parallel Rendering of Large
+  Tiled Display Walls". M Han, I Wald, W Usher, N Morrical, A Knoll, V
+  Pascucci, C R Johnson. IEEE Vis Short Papers 2020.
+  
+  (http://www.sci.utah.edu/~wald/Publications/2020/dw2/dw2.pdf)
+ 
+- "Spatial Partitioning Strategies for Memory-Efficient Ray Tracing of
+  Particles".  P Gralka, I Wald, S Geringer, G Reina, Th Ertl. IEEE
+  Symposium on Large Data Analysis and Viusalization (LDAV) 2020.
+ 
+- "Finding Efficient Spatial Distributions for Massively Instanced 3-d
+  Models".  S Zellmann, N Morrical, I Wald, V Pascucci.  Eurographics
+  Symposium on Parallel Graphics and Visualization (EGPGV 2020).
+  
+  (https://vis.uni-koeln.de/forschung/publikationen/finding-efficient-spatial-distributions-for-massively-instanced-3-d-models)
+ 
+  ![Sample "Data Parallel Ray Tracing w/ OWL" images (Image Credits: See Authors)](jpg/collage-instances.jpg)
+ 
+- "High-Quality Rendering of Glyphs Using Hardware-Accelerated Ray
+  Tracing".  S Zellmann, M Aumüller, N Marshak, I Wald.  Eurographics
+  Symposium on Parallel Graphics and Visualization (EGPGV 2020).
+  
+  (https://vis.uni-koeln.de/forschung/publikationen/high-quality-rendering-of-glyphs-using-hardware-accelerated-ray-tracing)
+
+  ![Sample "ExaBricks" images (Image Credits: See Authors)](jpg/collage-tubes.jpg)
+  
+- "RTX Beyond Ray Tracing: Exploring the Use of Hardware Ray Tracing
+  Cores for Tet-Mesh Point Location". I Wald, W Usher, N Morrical, L
+  Lediaev, and V Pascucci.  In High Performance Graphics Short Papers,
+  2019 
+  
+  (https://www.willusher.io/publications/rtx-points)
+
+- "Using Hardware Ray Transforms to Accelerate Ray/Primitive
+  Intersections for Long, Thin Primitive Types". I Wald, N Morrical, S
+  Zellmann, L Ma, W Usher, T Huang, V Pascucci.  Proceedings of the
+  ACM on Computer Graphics and Interactive Techniques (Proceedings of
+  High Performance Graphics), 2020
+  
+  (https://www.willusher.io/publications/owltubes)
+
+- "Efficient Space Skipping and Adaptive Sampling of Unstructured
+  Volumes Using Hardware Accelerated Ray Tracing. N Morrical, W
+  Usher, I Wald, V Pascucci. In IEEE VIS Short Papers, 2019
+  
+  (https://www.willusher.io/publications/rtx-space-skipping)
 
 
 
 <!-- ======================================================= -->
-## `ll08-sierpinski`
+# OWL's own "Tutorial-Style" Samples
+
+The OWL repo itself contains a list of samples intended to only
+highlight/demonstrate certain individual technologies such as how to
+create a group, how to do multi-level instancing, etc. Here a overview
+over some of those:
+
+<!-- ======================================================= -->
+### `ll08-sierpinski`
 
 The latest sample, demonstrating multi-level instancing:
 
@@ -23,7 +105,7 @@ The latest sample, demonstrating multi-level instancing:
 
 
 <!-- ======================================================= -->
-## `ll07-groupOfGroups`
+### `ll07-groupOfGroups`
 
 ![PNG file produced by this sample](samples/ll07-groupOfGroups.png.jpg){.samplepic}
 
@@ -33,7 +115,7 @@ The latest sample, demonstrating multi-level instancing:
 
 
 <!-- ======================================================= -->
-## `ll06-rtow-mixedGeometries`
+### `ll06-rtow-mixedGeometries`
 
 - Extends `ll05` by replacing some of the spheres with boxes
 
@@ -54,7 +136,7 @@ The latest sample, demonstrating multi-level instancing:
 
 
 <!-- ======================================================= -->
-## `ll05-rtow`
+### `ll05-rtow`
 
 - The first-ever "real" example that re-implements Ingo Wald
   original OptiX-6 based "Ray Tracing in one Weekend" example
@@ -75,7 +157,7 @@ The latest sample, demonstrating multi-level instancing:
 
 
 <!-- ======================================================= -->
-## `ll04-userGeometry-boundsProg`
+### `ll04-userGeometry-boundsProg`
 
 - Similar to ll03, except that bounds are computed via a bounding box *program*
 
@@ -91,7 +173,7 @@ The latest sample, demonstrating multi-level instancing:
 
 
 <!-- ======================================================= -->
-## `ll03-userGeometry-boundsBuffer`
+### `ll03-userGeometry-boundsBuffer`
 
 - Replaces the triangle meshes in ll02 with user geometry
 
@@ -109,7 +191,7 @@ The latest sample, demonstrating multi-level instancing:
 
 
 <!-- ======================================================= -->
-## `ll02-multipleTriangleGroups`
+### `ll02-multipleTriangleGroups`
 
 - Replaces single box with eight different ones
 
@@ -132,7 +214,7 @@ shade boxes with different colors.
 
 
 <!-- ======================================================= -->
-## `ll01-simpleTriangles`
+### `ll01-simpleTriangles`
 
 This was the very first sample ever implemented for OWL (at a time
 when OWL could do exactly this sample, and nothing else).
