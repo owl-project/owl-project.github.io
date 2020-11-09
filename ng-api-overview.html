@@ -44,7 +44,7 @@
     Sphere sphere;
     Metal  material;
   };</code></pre>
-<p>(obviously, same for <code>DielectricSphere</code> and <code>LambertianSphere</code>, too). Note that unlike OptiX 6 we do <em>not</em> separately handle &quot;Appearance&quot; and &quot;Geometry&quot;, but require a single struct that combines them - OptiX 6 &quot;fused&quot; those two parts using a compiler, which we (intentionally) do not use in OWL).</p>
+<p>(obviously, same for <code>DielectricSphere</code> and <code>LambertianSphere</code>, too). Note that unlike OptiX 6 we do <em>not</em> separately handle “Appearance” and “Geometry”, but require a single struct that combines them - OptiX 6 “fused” those two parts using a compiler, which we (intentionally) do not use in OWL).</p>
 <h3 id="closest-hit-programs">Closest Hit Program(s)</h3>
 <p>For those types, we then also need to define the device-side closesthit, miss, and raygen programs; e.g.</p>
 <pre><code>template&lt;typename SpheresGeomType&gt;
@@ -103,7 +103,7 @@ OPTIX_BOUNDS_PROGRAM(MetalSpheres)(const void  *geomData,
                               module,&quot;MetalSpheres&quot;);
   owlGeomTypeSetBoundsProg(metalSpheresGeomType,
                            module,&quot;MetalSpheres&quot;);</code></pre>
-<p>... which defines the programs to run on that type, as well as the sizeof the &quot;variables&quot; struct that this type uses (the <code>MetalSpheresGeom</code> type defined above). Obviously, we again do the same for Dielectric and Lambertian, too.</p>
+<p>… which defines the programs to run on that type, as well as the sizeof the “variables” struct that this type uses (the <code>MetalSpheresGeom</code> type defined above). Obviously, we again do the same for Dielectric and Lambertian, too.</p>
 <h3 id="geometries">Geometries</h3>
 <p>Using these three types, we can now create actual geometries that use these types. Note that in <em>this</em> example, each type actually contains <em>several</em> spheres of the given type, which we pass through a buffer:</p>
 <pre><code>  OWLBuffer metalSpheresBuffer
@@ -114,14 +114,14 @@ OPTIX_BOUNDS_PROGRAM(MetalSpheres)(const void  *geomData,
   owlGeomSetPrimCount(metalSpheresGeom,metalSpheres.size());
   owlGeomSetBuffer(metalSpheresGeom,&quot;prims&quot;,metalSpheresBuffer);</code></pre>
 <p>(again, same for Dielectric and Lambertian).</p>
-<p>We could of course have created a different geom for each sphere, too, but at significantly higher cost (for reasons we won't go into here).</p>
+<p>We could of course have created a different geom for each sphere, too, but at significantly higher cost (for reasons we won’t go into here).</p>
 <h3 id="acceleration-structure">Acceleration Structure</h3>
 <p>Once we have our three geometries we can create a accel structure/group over them via</p>
 <pre><code>  OWLGroup world
     = owlUserGeomGroupCreate(context,3,userGeoms);
   owlGroupBuildAccel(world);</code></pre>
-<p>... which will take care of all the required steps for - allocating memory for the bounds program and computing the bounds of all primitives in all geometries in this group - setting up the build inputs for the acceleration structure - allocating memory for the accel structure, and executing the three build stages, including compaction of the final BVH.</p>
-<h3 id="raygen...">RayGen...</h3>
+<p>… which will take care of all the required steps for - allocating memory for the bounds program and computing the bounds of all primitives in all geometries in this group - setting up the build inputs for the acceleration structure - allocating memory for the accel structure, and executing the three build stages, including compaction of the final BVH.</p>
+<h3 id="raygen">RayGen…</h3>
 <p>then create miss and raygen program</p>
 <pre><code>  OWLVarDecl rayGenVars[] = {
     { &quot;fbPtr&quot;,         OWL_BUFPTR, OWL_OFFSETOF(RayGenData,fbPtr)},
@@ -134,18 +134,18 @@ OPTIX_BOUNDS_PROGRAM(MetalSpheres)(const void  *geomData,
     = owlRayGenCreate(context,module,&quot;rayGen&quot;,
                       sizeof(RayGenData),
                       rayGenVars,-1);</code></pre>
-<p>...set its parameters</p>
+<p>…set its parameters</p>
 <pre><code>  owlRayGenSetBuffer(rayGen,&quot;fbPtr&quot;,        frameBuffer);
   owlRayGenSet2i    (rayGen,&quot;fbSize&quot;,       (const owl2i&amp;)fbSize);
   owlRayGenSetGroup (rayGen,&quot;world&quot;,        world);
   owlRayGenSet3f    (rayGen,&quot;camera.org&quot;,   (const owl3f&amp;)origin);
   ...</code></pre>
-<h3 id="and-finally-launch">... and finally: Launch</h3>
+<h3 id="and-finally-launch">… and finally: Launch</h3>
 <p>Once all the scene is defined, all we have to do is tell owl to build the programs, pipeline, and shader binding table (SBT)</p>
 <pre><code>  owlBuildPrograms(context);
   owlBuildPipeline(context);
   owlBuildSBT(context);</code></pre>
-<p>... and launch the ray gen program</p>
+<p>… and launch the ray gen program</p>
 <pre><code>  owlRayGenLaunch2D(rayGen,fbSize.x,fbSize.y);</code></pre>
 <p>Then after the launch, read the frame buffer and write it to disk:</p>
 <pre><code>  const uint32_t *fb
