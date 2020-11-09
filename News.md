@@ -14,6 +14,8 @@ This week at IEEE Vis we presented our "ExaBricks" paper on
 AMR data rendering, written completely in OWL: 
 https://www.willusher.io/publications/exabrick
 
+  ![Sample "ExaBricks" images (done w/ OWL)](jpg/exajet.jpg){.widepic}
+
 <!-- ======================================================= -->
 ## Oct 17, 2020 - first "Version 1.0" 
 
